@@ -1,16 +1,26 @@
-package com.spring.LogisticsStatusTrackingWebsite.domain.response;
+package com.spring.LogisticsStatusTrackingWebsite.repository.data;
 
-import lombok.Builder;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Builder
-public class Recipient {
-
+@Entity
+@Table(name = "recipient")
+public class RecipientDataModel {
+    @Id
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone")
     private String phone;
 
-    public Recipient(Long id, String name, String address, String phone) {
+    public RecipientDataModel(Long id, String name, String address, String phone) {
         this.id = id;
         this.name = name;
         this.address = address;

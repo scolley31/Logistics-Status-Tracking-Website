@@ -2,7 +2,9 @@ package com.spring.LogisticsStatusTrackingWebsite.service;
 
 
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.*;
-import com.spring.LogisticsStatusTrackingWebsite.repository.InMemoryLogisticsRepository;
+import com.spring.LogisticsStatusTrackingWebsite.repository.EntityMapper;
+import com.spring.LogisticsStatusTrackingWebsite.repository.LogisticsRepository;
+import com.spring.LogisticsStatusTrackingWebsite.repository.data.LogisticsStatueDataModel;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,58 +14,60 @@ import java.util.Random;
 @Service
 public class LogisticsService {
 
-    private final InMemoryLogisticsRepository repository;
+    private final LogisticsRepository logisticsRepository;
 
-    public LogisticsService(InMemoryLogisticsRepository repository) {
-        this.repository = repository;
+    public LogisticsService(LogisticsRepository logisticsRepository) {
+        this.logisticsRepository = logisticsRepository;
     }
 
-    public LogisticsStatue queryLogisticsStatus(String logisticsNumber) {
-        return repository.findLogisticsById(logisticsNumber);
+    public LogisticsStatus queryLogisticsStatus(String logisticsNumber) {
+        LogisticsStatueDataModel logisticsStatueDataModel = logisticsRepository.findById(logisticsNumber);
+        return EntityMapper.mapToDomain(logisticsStatueDataModel);
     }
 
-    public List<LogisticsStatue> createFakeLogisticsStatus(String dataCounts) {
-        List<LogisticsStatue> fakeLogisticsStatues = new ArrayList<>();
+    public List<LogisticsStatus> createFakeLogisticsStatus(String dataCounts) {
+        List<LogisticsStatus> fakeLogisticsStatuses = new ArrayList<>();
         for (int i = 0; i < Integer.parseInt(dataCounts); i++) {
-            LogisticsStatue logisticsStatue = createLogisticsStatus();
-            repository.save(logisticsStatue);
-            fakeLogisticsStatues.add(logisticsStatue);
+            LogisticsStatus logisticsStatus = createLogisticsStatus();
+            LogisticsStatueDataModel logisticsStatueDataModel = EntityMapper.mapToEntity(logisticsStatus);
+            logisticsRepository.save(logisticsStatueDataModel);
+            fakeLogisticsStatuses.add(logisticsStatus);
         }
-        return fakeLogisticsStatues;
+        return fakeLogisticsStatuses;
     }
 
-    public static LogisticsStatue createLogisticsStatus() {
-        return LogisticsStatue.builder()
+    public static LogisticsStatus createLogisticsStatus() {
+        return LogisticsStatus.builder()
                 .sno(String.valueOf(new Random().nextInt(100000000)))
                 .tracking_status(TrackingStatus.CREATED)
                 .estimated_delivery("2021-05-20")
-                .details(new LogisticsStatueDetail[]{
-                        LogisticsStatueDetail.builder()
-                                .id(1)
+                .details(new LogisticsStatusDetail[]{
+                        LogisticsStatusDetail.builder()
+                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
                                 .location_id(1)
                                 .location_title("台北市")
                                 .build(),
-                        LogisticsStatueDetail.builder()
-                                .id(1)
+                        LogisticsStatusDetail.builder()
+                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
                                 .location_id(1)
                                 .location_title("台北市")
                                 .build(),
-                        LogisticsStatueDetail.builder()
-                                .id(1)
+                        LogisticsStatusDetail.builder()
+                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
                                 .location_id(1)
                                 .location_title("台北市")
                                 .build(),
-                        LogisticsStatueDetail.builder()
-                                .id(1)
+                        LogisticsStatusDetail.builder()
+                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
@@ -77,7 +81,7 @@ public class LogisticsService {
                         .address("台北市")
                         .build())
                 .current_location(CurrentLocation.builder()
-                        .location_id(1)
+                        .location_id(1L)
                         .title("台北市")
                         .city("台北市")
                         .address("台北市")

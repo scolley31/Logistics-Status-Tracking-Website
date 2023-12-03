@@ -3,8 +3,7 @@ package com.spring.LogisticsStatusTrackingWebsite.controller;
 
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.ApiResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.ErrorResponse;
-import com.spring.LogisticsStatusTrackingWebsite.domain.response.FakeLogisticsStatue;
-import com.spring.LogisticsStatusTrackingWebsite.domain.response.LogisticsStatue;
+import com.spring.LogisticsStatusTrackingWebsite.domain.response.LogisticsStatus;
 import com.spring.LogisticsStatusTrackingWebsite.service.LogisticsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +24,17 @@ public class LogisticsController {
     }
 
     @GetMapping("/query")
-    public ResponseEntity<ApiResponse<LogisticsStatue>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
-        LogisticsStatue logisticsStatue = logisticsService.queryLogisticsStatus(logisticsNumber);
-        if (logisticsStatue == null) {
+    public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
+        LogisticsStatus logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
+        if (logisticsStatus == null) {
             return ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found")));
         }
-        return ResponseEntity.ok(new ApiResponse<>("success", logisticsStatue));
+        return ResponseEntity.ok(new ApiResponse<>("success", logisticsStatus));
     }
 
     @GetMapping("/fake")
-    public ResponseEntity<ApiResponse<List<LogisticsStatue>>> createFakeLogisticsStatus(@RequestParam("num") String dataCounts) {
-        List<LogisticsStatue> fakeLogisticsStatues = logisticsService.createFakeLogisticsStatus(dataCounts);
-        return ResponseEntity.ok(new ApiResponse<>("success", fakeLogisticsStatues));
+    public ResponseEntity<ApiResponse<List<LogisticsStatus>>> createFakeLogisticsStatus(@RequestParam("num") String dataCounts) {
+        List<LogisticsStatus> fakeLogisticsStatuses = logisticsService.createFakeLogisticsStatus(dataCounts);
+        return ResponseEntity.ok(new ApiResponse<>("success", fakeLogisticsStatuses));
     }
 }

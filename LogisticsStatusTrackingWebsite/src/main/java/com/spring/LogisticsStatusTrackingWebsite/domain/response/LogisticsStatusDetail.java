@@ -4,16 +4,16 @@ package com.spring.LogisticsStatusTrackingWebsite.domain.response;
 import lombok.Builder;
 
 @Builder
-public class LogisticsStatueDetail {
+public class LogisticsStatusDetail {
 
-    private int id;
+    private Long id;
     private String date;
     private String time;
     private TrackingStatus status;
     private int location_id;
     private String location_title;
 
-    public LogisticsStatueDetail(int id, String date, String time, TrackingStatus status, int location_id, String location_title) {
+    public LogisticsStatusDetail(Long id, String date, String time, TrackingStatus status, int location_id, String location_title) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -22,11 +22,11 @@ public class LogisticsStatueDetail {
         this.location_title = location_title;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

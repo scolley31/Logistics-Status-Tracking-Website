@@ -5,23 +5,23 @@ import lombok.Builder;
 @Builder
 public class CurrentLocation {
 
-    private int location_id;
+    private Long location_id;
     private String title;
     private String city;
     private String address;
 
-    public CurrentLocation(int location_id, String title, String city, String address) {
+    public CurrentLocation(Long location_id, String title, String city, String address) {
         this.location_id = location_id;
         this.title = title;
         this.city = city;
         this.address = address;
     }
 
-    public int getLocation_id() {
+    public Long getLocation_id() {
         return location_id;
     }
 
-    public void setLocation_id(int location_id) {
+    public void setLocation_id(Long location_id) {
         this.location_id = location_id;
     }
 
