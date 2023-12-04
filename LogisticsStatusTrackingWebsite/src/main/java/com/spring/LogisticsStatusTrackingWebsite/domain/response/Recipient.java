@@ -2,26 +2,28 @@ package com.spring.LogisticsStatusTrackingWebsite.domain.response;
 
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
 public class Recipient {
 
-    private Long id;
+    private UUID id;
     private String name;
     private String address;
     private String phone;
 
-    public Recipient(Long id, String name, String address, String phone) {
+    public Recipient(UUID id, String name, String address, String phone) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -2,19 +2,19 @@ package com.spring.LogisticsStatusTrackingWebsite.repository.data;
 
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.TrackingStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
+@Getter
 @Entity
 @Table(name = "logistics_statue")
 public class LogisticsStatueDataModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "sno")
-    private String sno;
+    private long sno;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tracking_status")
@@ -34,8 +34,7 @@ public class LogisticsStatueDataModel {
     @JoinColumn(name = "current_location", referencedColumnName = "id")
     private CurrentLocationDataModel currentLocation;
 
-    public LogisticsStatueDataModel(String sno, TrackingStatus trackingStatus, String estimatedDelivery, List<LogisticsStatusDetailDataModel> details, RecipientDataModel recipient, CurrentLocationDataModel currentLocation) {
-        this.sno = sno;
+    public LogisticsStatueDataModel(TrackingStatus trackingStatus, String estimatedDelivery, List<LogisticsStatusDetailDataModel> details, RecipientDataModel recipient, CurrentLocationDataModel currentLocation) {
         this.trackingStatus = trackingStatus;
         this.estimatedDelivery = estimatedDelivery;
         this.details = details;
@@ -43,56 +42,23 @@ public class LogisticsStatueDataModel {
         this.currentLocation = currentLocation;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSno() {
-        return sno;
-    }
-
-    public void setSno(String sno) {
-        this.sno = sno;
-    }
-
-    public TrackingStatus getTrackingStatus() {
-        return trackingStatus;
+    public LogisticsStatueDataModel() {
     }
 
     public void setTrackingStatus(TrackingStatus trackingStatus) {
         this.trackingStatus = trackingStatus;
     }
 
-    public String getEstimatedDelivery() {
-        return estimatedDelivery;
-    }
-
     public void setEstimatedDelivery(String estimatedDelivery) {
         this.estimatedDelivery = estimatedDelivery;
-    }
-
-    public List<LogisticsStatusDetailDataModel> getDetails() {
-        return details;
     }
 
     public void setDetails(List<LogisticsStatusDetailDataModel> details) {
         this.details = details;
     }
 
-    public RecipientDataModel getRecipient() {
-        return recipient;
-    }
-
     public void setRecipient(RecipientDataModel recipient) {
         this.recipient = recipient;
-    }
-
-    public CurrentLocationDataModel getCurrentLocation() {
-        return currentLocation;
     }
 
     public void setCurrentLocation(CurrentLocationDataModel currentLocation) {

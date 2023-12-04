@@ -1,15 +1,18 @@
 package com.spring.LogisticsStatusTrackingWebsite.repository.data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
 
+import java.util.UUID;
+
+@Getter
 @Entity
 @Table(name = "recipient")
 public class RecipientDataModel {
+
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -20,39 +23,25 @@ public class RecipientDataModel {
     @Column(name = "phone")
     private String phone;
 
-    public RecipientDataModel(Long id, String name, String address, String phone) {
-        this.id = id;
+    public RecipientDataModel(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
-    public Long getId() {
-        return id;
+    public RecipientDataModel() {
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     public void setPhone(String phone) {

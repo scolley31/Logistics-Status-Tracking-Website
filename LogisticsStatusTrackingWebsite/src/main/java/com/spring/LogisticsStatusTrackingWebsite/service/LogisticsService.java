@@ -2,48 +2,44 @@ package com.spring.LogisticsStatusTrackingWebsite.service;
 
 
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.*;
-import com.spring.LogisticsStatusTrackingWebsite.repository.EntityMapper;
 import com.spring.LogisticsStatusTrackingWebsite.repository.LogisticsRepository;
-import com.spring.LogisticsStatusTrackingWebsite.repository.data.LogisticsStatueDataModel;
+import com.spring.LogisticsStatusTrackingWebsite.repository.LogisticsRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class LogisticsService {
 
-    private final LogisticsRepository logisticsRepository;
+    private final LogisticsRepositoryImpl logisticsRepository;
 
-    public LogisticsService(LogisticsRepository logisticsRepository) {
+    public LogisticsService(LogisticsRepositoryImpl logisticsRepository) {
         this.logisticsRepository = logisticsRepository;
     }
 
-    public LogisticsStatus queryLogisticsStatus(String logisticsNumber) {
-        LogisticsStatueDataModel logisticsStatueDataModel = logisticsRepository.findById(logisticsNumber);
-        return EntityMapper.mapToDomain(logisticsStatueDataModel);
+    public Optional<LogisticsStatus> queryLogisticsStatus(String logisticsNumber) {
+        return logisticsRepository.findById(logisticsNumber);
     }
 
     public List<LogisticsStatus> createFakeLogisticsStatus(String dataCounts) {
         List<LogisticsStatus> fakeLogisticsStatuses = new ArrayList<>();
         for (int i = 0; i < Integer.parseInt(dataCounts); i++) {
             LogisticsStatus logisticsStatus = createLogisticsStatus();
-            LogisticsStatueDataModel logisticsStatueDataModel = EntityMapper.mapToEntity(logisticsStatus);
-            logisticsRepository.save(logisticsStatueDataModel);
-            fakeLogisticsStatuses.add(logisticsStatus);
+            LogisticsStatus saveLogisticsStatus = logisticsRepository.save(logisticsStatus);
+            fakeLogisticsStatuses.add(saveLogisticsStatus);
         }
         return fakeLogisticsStatuses;
     }
 
     public static LogisticsStatus createLogisticsStatus() {
         return LogisticsStatus.builder()
-                .sno(String.valueOf(new Random().nextInt(100000000)))
                 .tracking_status(TrackingStatus.CREATED)
                 .estimated_delivery("2021-05-20")
                 .details(new LogisticsStatusDetail[]{
                         LogisticsStatusDetail.builder()
-                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
@@ -51,7 +47,6 @@ public class LogisticsService {
                                 .location_title("台北市")
                                 .build(),
                         LogisticsStatusDetail.builder()
-                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
@@ -59,7 +54,6 @@ public class LogisticsService {
                                 .location_title("台北市")
                                 .build(),
                         LogisticsStatusDetail.builder()
-                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
@@ -67,7 +61,6 @@ public class LogisticsService {
                                 .location_title("台北市")
                                 .build(),
                         LogisticsStatusDetail.builder()
-                                .id(1L)
                                 .date("2021-05-20")
                                 .time("10:00:00")
                                 .status(TrackingStatus.CREATED)
@@ -81,7 +74,7 @@ public class LogisticsService {
                         .address("台北市")
                         .build())
                 .current_location(CurrentLocation.builder()
-                        .location_id(1L)
+                        .location_id(new Random().nextLong(Long.MAX_VALUE))
                         .title("台北市")
                         .city("台北市")
                         .address("台北市")

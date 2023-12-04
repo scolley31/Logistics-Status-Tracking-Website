@@ -9,7 +9,7 @@ import java.util.HashMap;
 @Component
 public class InMemoryLogisticsRepository {
 
-    HashMap<String, LogisticsStatus> store = new HashMap<>();
+    HashMap<Long, LogisticsStatus> store = new HashMap<>();
 
     public LogisticsStatus save(LogisticsStatus logistic) {
         store.put(logistic.getSno(), logistic);

@@ -11,7 +11,6 @@ import com.spring.LogisticsStatusTrackingWebsite.repository.data.RecipientDataMo
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EntityMapper {
 
@@ -30,7 +29,6 @@ public class EntityMapper {
 
 
         return new LogisticsStatueDataModel(
-                logisticsStatus.getSno(),
                 logisticsStatus.getTracking_status(),
                 logisticsStatus.getEstimated_delivery(),
                 details,
@@ -41,7 +39,6 @@ public class EntityMapper {
 
     public static LogisticsStatusDetailDataModel mapToLogisticsStatusDetailDataModel(LogisticsStatusDetail logisticsStatusDetail) {
         return new LogisticsStatusDetailDataModel(
-                logisticsStatusDetail.getId(),
                 logisticsStatusDetail.getDate(),
                 logisticsStatusDetail.getTime(),
                 logisticsStatusDetail.getStatus(),
@@ -52,7 +49,6 @@ public class EntityMapper {
 
     public static RecipientDataModel mapToCurrentRecipientDataModel(Recipient recipient) {
         return new RecipientDataModel(
-                recipient.getId(),
                 recipient.getName(),
                 recipient.getPhone(),
                 recipient.getAddress()

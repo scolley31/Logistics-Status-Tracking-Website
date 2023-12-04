@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/logistics")
@@ -25,11 +26,8 @@ public class LogisticsController {
 
     @GetMapping("/query")
     public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
-        LogisticsStatus logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
-        if (logisticsStatus == null) {
-            return ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found")));
-        }
-        return ResponseEntity.ok(new ApiResponse<>("success", logisticsStatus));
+        Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
+        return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
     }
 
     @GetMapping("/fake")

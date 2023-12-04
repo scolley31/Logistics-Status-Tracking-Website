@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "current_location")
 public class CurrentLocationDataModel {
@@ -28,32 +30,19 @@ public class CurrentLocationDataModel {
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
+    public CurrentLocationDataModel() {
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getCity() {
-        return city;
-    }
-
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public void setAddress(String address) {
