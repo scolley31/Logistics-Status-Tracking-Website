@@ -40,7 +40,8 @@ echo $JSON_RESULT | jq '.' > $OUTPUT_JSON
 
 # Check if the operation was successful
 if [ $? -eq 0 ]; then
-  echo "JSON file created successfully. Results saved to $OUTPUT_JSON"
+  echo "created_dt": "'$(date -u +"%Y-%m-%dT%H:%M:%SZ")'JSON file created successfully. Results saved to $OUTPUT_JSON"
+  echo $JSON_RESULT | jq '.'
 else
   echo "Error creating the JSON file."
 fi
