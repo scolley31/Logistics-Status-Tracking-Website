@@ -37,7 +37,7 @@ public class EntityMapper {
         );
     }
 
-    public static LogisticsStatusDetailDataModel mapToLogisticsStatusDetailDataModel(LogisticsStatusDetail logisticsStatusDetail) {
+    private static LogisticsStatusDetailDataModel mapToLogisticsStatusDetailDataModel(LogisticsStatusDetail logisticsStatusDetail) {
         return new LogisticsStatusDetailDataModel(
                 logisticsStatusDetail.getDate(),
                 logisticsStatusDetail.getTime(),
@@ -47,7 +47,7 @@ public class EntityMapper {
         );
     }
 
-    public static RecipientDataModel mapToCurrentRecipientDataModel(Recipient recipient) {
+    private static RecipientDataModel mapToCurrentRecipientDataModel(Recipient recipient) {
         return new RecipientDataModel(
                 recipient.getName(),
                 recipient.getPhone(),
@@ -55,7 +55,7 @@ public class EntityMapper {
         );
     }
 
-    public static CurrentLocationDataModel mapToCurrentLocationDataModel(CurrentLocation currentLocation) {
+    private static CurrentLocationDataModel mapToCurrentLocationDataModel(CurrentLocation currentLocation) {
         return new CurrentLocationDataModel(
                 currentLocation.getLocation_id(),
                 currentLocation.getTitle(),
@@ -86,7 +86,7 @@ public class EntityMapper {
         );
     }
 
-    public static LogisticsStatusDetail mapToLogisticsStatusDetail(LogisticsStatusDetailDataModel logisticsStatusDetailDataModel) {
+    private static LogisticsStatusDetail mapToLogisticsStatusDetail(LogisticsStatusDetailDataModel logisticsStatusDetailDataModel) {
         return new LogisticsStatusDetail(
                 logisticsStatusDetailDataModel.getId(),
                 logisticsStatusDetailDataModel.getDate(),
@@ -97,7 +97,7 @@ public class EntityMapper {
         );
     }
 
-    public static Recipient mapToRecipient(RecipientDataModel recipientDataModel) {
+    private static Recipient mapToRecipient(RecipientDataModel recipientDataModel) {
         return new Recipient(
                 recipientDataModel.getId(),
                 recipientDataModel.getName(),
@@ -106,7 +106,7 @@ public class EntityMapper {
         );
     }
 
-    public static CurrentLocation mapToCurrentLocation(CurrentLocationDataModel currentLocationDataModel) {
+    private static CurrentLocation mapToCurrentLocation(CurrentLocationDataModel currentLocationDataModel) {
         return new CurrentLocation(
                 currentLocationDataModel.getId(),
                 currentLocationDataModel.getTitle(),

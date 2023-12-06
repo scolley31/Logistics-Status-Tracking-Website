@@ -2,8 +2,10 @@ package com.spring.LogisticsStatusTrackingWebsite.service;
 
 
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.*;
-import com.spring.LogisticsStatusTrackingWebsite.repository.LogisticsRepository;
 import com.spring.LogisticsStatusTrackingWebsite.repository.LogisticsRepositoryImpl;
+import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +17,14 @@ import java.util.Random;
 public class LogisticsService {
 
     private final LogisticsRepositoryImpl logisticsRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public LogisticsService(LogisticsRepositoryImpl logisticsRepository) {
+    @Resource(name="redisTemplate")
+    private ListOperations<Long, String> listOps;
+
+    public LogisticsService(LogisticsRepositoryImpl logisticsRepository, RedisTemplate<String, String> redisTemplate) {
         this.logisticsRepository = logisticsRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     public Optional<LogisticsStatus> queryLogisticsStatus(String logisticsNumber) {
@@ -28,6 +35,7 @@ public class LogisticsService {
         List<LogisticsStatus> fakeLogisticsStatuses = new ArrayList<>();
         for (int i = 0; i < Integer.parseInt(dataCounts); i++) {
             LogisticsStatus logisticsStatus = createLogisticsStatus();
+            listOps.leftPush(logisticsStatus.getSno(), logisticsStatus.toString());
             LogisticsStatus saveLogisticsStatus = logisticsRepository.save(logisticsStatus);
             fakeLogisticsStatuses.add(saveLogisticsStatus);
         }
