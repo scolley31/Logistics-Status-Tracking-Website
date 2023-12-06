@@ -21,7 +21,7 @@ OUTPUT_JSON="output.json"
 
 # Run MySQL query and save the results to a temporary file
 TMP_OUTPUT="temp_output.json"
-sudo docker exec -i -t logisticsstatustrackingwebsite-mysqlserver-1 mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "SELECT tracking_status FROM $TABLE_NAME;" > $TMP_OUTPUT
+sudo docker exec -t logisticsstatustrackingwebsite-mysqlserver-1 mysql -h$DB_HOST -P$DB_PORT -u$DB_USER -p$DB_PASSWORD $DB_NAME -e "SELECT tracking_status FROM $TABLE_NAME;" > $TMP_OUTPUT
 
 # Check if the query was successful
 if [ $? -ne 0 ]; then
