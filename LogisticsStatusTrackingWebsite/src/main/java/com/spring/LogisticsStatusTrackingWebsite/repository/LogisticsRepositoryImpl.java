@@ -5,6 +5,7 @@ import com.spring.LogisticsStatusTrackingWebsite.repository.data.LogisticsStatue
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = "logistics")
 public class LogisticsRepositoryImpl implements LogisticsRepository{
 
     private final LogisticsDao logisticsDao;
