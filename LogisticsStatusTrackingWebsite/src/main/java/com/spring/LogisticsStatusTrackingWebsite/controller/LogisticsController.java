@@ -23,11 +23,9 @@ public class LogisticsController {
 
     private final LogisticsService logisticsService;
     private final StringRedisTemplate stringRedisTemplate;
-    private RedisTemplate redisTemplate;
-    public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate, RedisTemplate redisTemplate) {
+    public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate) {
         this.logisticsService = logisticsService;
         this.stringRedisTemplate = stringRedisTemplate;
-        this.redisTemplate = redisTemplate;
     }
 
     @GetMapping("/query")
