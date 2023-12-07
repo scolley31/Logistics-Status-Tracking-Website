@@ -24,8 +24,6 @@ public class LogisticsController {
     private final LogisticsService logisticsService;
     private final StringRedisTemplate stringRedisTemplate;
     private RedisTemplate redisTemplate;
-    ValueOperations<String, LogisticsStatus> operations = redisTemplate.opsForValue();
-
     public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate, RedisTemplate redisTemplate) {
         this.logisticsService = logisticsService;
         this.stringRedisTemplate = stringRedisTemplate;
@@ -36,7 +34,6 @@ public class LogisticsController {
     public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
         Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
         stringRedisTemplate.opsForValue().set("scolley34", "222");
-        logisticsStatus.ifPresent(status -> operations.set(logisticsNumber, status));
         return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
     }
 
