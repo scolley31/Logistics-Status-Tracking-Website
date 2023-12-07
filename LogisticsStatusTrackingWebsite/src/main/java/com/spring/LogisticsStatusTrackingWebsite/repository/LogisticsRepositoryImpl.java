@@ -20,11 +20,11 @@ public class LogisticsRepositoryImpl implements LogisticsRepository{
 
     private final LogisticsDao logisticsDao;
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
-    @Resource(name="redisCache")
-    private ListOperations<String, String> listOps;
+//    @Autowired
+//    private RedisTemplate<String, String> redisTemplate;
+//
+//    @Resource(name="redisCache")
+//    private ListOperations<String, String> listOps;
 
     @Override
     public LogisticsStatus save(LogisticsStatus logisticsStatus) {
@@ -36,7 +36,7 @@ public class LogisticsRepositoryImpl implements LogisticsRepository{
     @Override
     public Optional<LogisticsStatus> findById(String id) {
 //        listOps.leftPush("logistics", id);
-        redisTemplate.boundListOps("logistics").leftPush(id);
+//        redisTemplate.boundListOps("logistics").leftPush(id);
         return logisticsDao.findById(Long.valueOf(id)).map(EntityMapper::mapToDomain);
     }
 
