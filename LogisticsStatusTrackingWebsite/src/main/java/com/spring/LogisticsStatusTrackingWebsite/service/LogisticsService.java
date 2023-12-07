@@ -17,14 +17,9 @@ import java.util.Random;
 public class LogisticsService {
 
     private final LogisticsRepositoryImpl logisticsRepository;
-    private final RedisTemplate<String, String> redisTemplate;
-
-    @Resource(name="redisTemplate")
-    private ListOperations<Long, String> listOps;
 
     public LogisticsService(LogisticsRepositoryImpl logisticsRepository, RedisTemplate<String, String> redisTemplate) {
         this.logisticsRepository = logisticsRepository;
-        this.redisTemplate = redisTemplate;
     }
 
     public Optional<LogisticsStatus> queryLogisticsStatus(String logisticsNumber) {
@@ -35,7 +30,6 @@ public class LogisticsService {
         List<LogisticsStatus> fakeLogisticsStatuses = new ArrayList<>();
         for (int i = 0; i < Integer.parseInt(dataCounts); i++) {
             LogisticsStatus logisticsStatus = createLogisticsStatus();
-            listOps.leftPush(logisticsStatus.getSno(), logisticsStatus.toString());
             LogisticsStatus saveLogisticsStatus = logisticsRepository.save(logisticsStatus);
             fakeLogisticsStatuses.add(saveLogisticsStatus);
         }
