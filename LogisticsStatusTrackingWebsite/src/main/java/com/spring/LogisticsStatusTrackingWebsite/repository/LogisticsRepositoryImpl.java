@@ -18,9 +18,6 @@ public class LogisticsRepositoryImpl implements LogisticsRepository {
 
     private final LogisticsDao logisticsDao;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
     @Override
     public LogisticsStatus save(LogisticsStatus logisticsStatus) {
         LogisticsStatueDataModel dataModel = EntityMapper.mapToEntity(logisticsStatus);
@@ -30,7 +27,6 @@ public class LogisticsRepositoryImpl implements LogisticsRepository {
 
     @Override
     public Optional<LogisticsStatus> findById(String id) {
-        stringRedisTemplate.opsForValue().set("aaa", "111");
         return logisticsDao.findById(Long.valueOf(id)).map(EntityMapper::mapToDomain);
     }
 
