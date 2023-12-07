@@ -29,8 +29,8 @@ public class LogisticsRepositoryImpl implements LogisticsRepository {
 
     @Override
     public Optional<LogisticsStatus> findById(String id) {
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        operations.set("test", "100");
+//        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+//        operations.set("test", "100");
         return logisticsDao.findById(Long.valueOf(id)).map(EntityMapper::mapToDomain);
     }
 
