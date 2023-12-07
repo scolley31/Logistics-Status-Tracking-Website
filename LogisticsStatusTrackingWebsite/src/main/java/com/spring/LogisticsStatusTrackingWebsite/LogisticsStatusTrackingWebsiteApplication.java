@@ -21,7 +21,7 @@ public class LogisticsStatusTrackingWebsiteApplication {
 		template.afterPropertiesSet();
 
 		template.opsForValue().set("foo", "bar");
-q
+
 		connectionFactory.destroy();
 	}
 
