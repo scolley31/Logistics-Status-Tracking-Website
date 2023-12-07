@@ -5,6 +5,7 @@ import com.spring.LogisticsStatusTrackingWebsite.domain.response.ApiResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.ErrorResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.LogisticsStatus;
 import com.spring.LogisticsStatusTrackingWebsite.service.LogisticsService;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,11 @@ import java.util.Optional;
 public class LogisticsController {
 
     private final LogisticsService logisticsService;
+    private final StringRedisTemplate stringRedisTemplate;
 
-    public LogisticsController(LogisticsService logisticsService) {
+    public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate) {
         this.logisticsService = logisticsService;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     @GetMapping("/query")
@@ -32,6 +35,7 @@ public class LogisticsController {
 
     @GetMapping("/fake")
     public ResponseEntity<ApiResponse<List<LogisticsStatus>>> createFakeLogisticsStatus(@RequestParam("num") String dataCounts) {
+        stringRedisTemplate.opsForValue().set("scolley", "111");
         List<LogisticsStatus> fakeLogisticsStatuses = logisticsService.createFakeLogisticsStatus(dataCounts);
         return ResponseEntity.ok(new ApiResponse<>("success", fakeLogisticsStatuses));
     }
