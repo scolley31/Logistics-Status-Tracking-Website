@@ -1,9 +1,16 @@
 version: '3.8'
 services:
+  redis-server:
+    hostname: redis
+    image: 'redis'
+    ports:
+      - "6379:6379"
   petclinic:
     build:
       context: .
       target: development
+    links:
+      - redis-server
     ports:
       - "8000:8000"
       - "8080:8080"
@@ -16,7 +23,6 @@ services:
       - ./:/app
     depends_on:
       - mysqlserver
-      - redis
   mysqlserver:
     image: mysql:8.0
     ports:
@@ -30,13 +36,6 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - mysql_config:/etc/mysql/conf.d
-  redis:
-    image: "redis"
-    ports:
-      - "6379:6379"
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
 volumes:
   mysql_data:
   mysql_config:
