@@ -22,7 +22,6 @@ public class LogisticsController {
 
     private final LogisticsService logisticsService;
 
-    @Autowired
     private final StringRedisTemplate stringRedisTemplate;
 
     public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate) {
@@ -32,7 +31,6 @@ public class LogisticsController {
 
     @GetMapping("/query")
     public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
-        stringRedisTemplate.opsForValue().set("scolley34", "111");
         Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
         return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
     }
