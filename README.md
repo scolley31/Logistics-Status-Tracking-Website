@@ -77,7 +77,7 @@ If you want to access the public server, you can use the following API to test t
 2. Add the fake data generator API.
 3. Add the query API.
 4. Use MySQL to store the data.
-5. Use Redis to cache the data (one hours expired and can't update active).
+5. Use Redis to cache the data (one hours expired and can't update actively).
 6. Use Docker Compose to build the project (Spring boot 3 + redis + mysql).
 7. Write the shell script to query data and summary the logistics status.
 8. Use cronjob to and execute shell script and executed at 00:00, 08:00, 16:00, 24:00 every day. 
