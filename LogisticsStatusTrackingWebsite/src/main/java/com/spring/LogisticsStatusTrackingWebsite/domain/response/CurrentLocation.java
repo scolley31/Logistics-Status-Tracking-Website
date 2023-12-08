@@ -2,6 +2,8 @@ package com.spring.LogisticsStatusTrackingWebsite.domain.response;
 
 import lombok.Builder;
 
+import java.util.Random;
+
 @Builder
 public class CurrentLocation {
 
@@ -51,4 +53,33 @@ public class CurrentLocation {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public static CurrentLocation getRandomeCurrentLocation() {
+
+        CurrentLocation firstCurrentLocation = CurrentLocation.builder()
+                .location_id(new Random().nextLong(Long.MAX_VALUE))
+                .title("台北物流中心")
+                .city("台北市")
+                .address("台北市")
+                .build();
+
+        CurrentLocation secondCurrentLocation = CurrentLocation.builder()
+                .location_id(new Random().nextLong(Long.MAX_VALUE))
+                .title("台中物流中心")
+                .city("台中市")
+                .address("台中市")
+                .build();
+
+        CurrentLocation thirdCurrentLocation = CurrentLocation.builder()
+                .location_id(new Random().nextLong(Long.MAX_VALUE))
+                .title("高雄物流中心")
+                .city("高雄市")
+                .address("高雄市")
+                .build();
+
+        CurrentLocation[] currentLocations = {firstCurrentLocation, secondCurrentLocation, thirdCurrentLocation};
+        int pick = new Random().nextInt(currentLocations.length);
+        return currentLocations[pick];
+    }
+
 }

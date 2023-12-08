@@ -38,8 +38,8 @@ public class LogisticsService {
 
     public static LogisticsStatus createLogisticsStatus() {
         return LogisticsStatus.builder()
-                .tracking_status(TrackingStatus.CREATED)
-                .estimated_delivery("2021-05-20")
+                .tracking_status(TrackingStatus.getRandomStatus())
+                .estimated_delivery("2024-05-20")
                 .details(new LogisticsStatusDetail[]{
                         LogisticsStatusDetail.builder()
                                 .date("2021-05-20")
@@ -55,33 +55,13 @@ public class LogisticsService {
                                 .location_id(1)
                                 .location_title("台北市")
                                 .build(),
-                        LogisticsStatusDetail.builder()
-                                .date("2021-05-20")
-                                .time("10:00:00")
-                                .status(TrackingStatus.CREATED)
-                                .location_id(1)
-                                .location_title("台北市")
-                                .build(),
-                        LogisticsStatusDetail.builder()
-                                .date("2021-05-20")
-                                .time("10:00:00")
-                                .status(TrackingStatus.CREATED)
-                                .location_id(1)
-                                .location_title("台北市")
-                                .build(),
                 })
-                .recipient(Recipient.builder()
-                        .name("王小明")
-                        .phone("0912345678")
-                        .address("台北市")
-                        .build())
-                .current_location(CurrentLocation.builder()
-                        .location_id(new Random().nextLong(Long.MAX_VALUE))
-                        .title("台北市")
-                        .city("台北市")
-                        .address("台北市")
-                        .build())
+                .recipient(Recipient.getRandomeRecipient())
+                .current_location(CurrentLocation.getRandomeCurrentLocation())
                 .build();
     }
+
+
+
 
 }

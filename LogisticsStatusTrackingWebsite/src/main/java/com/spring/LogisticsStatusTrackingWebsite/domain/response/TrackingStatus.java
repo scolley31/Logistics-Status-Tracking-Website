@@ -1,5 +1,7 @@
 package com.spring.LogisticsStatusTrackingWebsite.domain.response;
 
+import java.util.Random;
+
 public enum TrackingStatus {
 
     CREATED("Created"),
@@ -14,5 +16,10 @@ public enum TrackingStatus {
 
     TrackingStatus(String status) {
         this.status = status;
+    }
+
+    public static TrackingStatus getRandomStatus() {
+        int pick = new Random().nextInt(TrackingStatus.values().length);
+        return TrackingStatus.values()[pick];
     }
 }
