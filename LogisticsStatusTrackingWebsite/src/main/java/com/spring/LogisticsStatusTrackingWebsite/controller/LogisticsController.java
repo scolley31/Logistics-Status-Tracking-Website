@@ -6,6 +6,7 @@ import com.spring.LogisticsStatusTrackingWebsite.domain.response.ErrorResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.LogisticsStatus;
 import com.spring.LogisticsStatusTrackingWebsite.service.LogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +22,24 @@ import java.util.Optional;
 public class LogisticsController {
 
     private final LogisticsService logisticsService;
+    private final RedisTemplate<String, LogisticsStatus> redisTemplate;
 
-    private final StringRedisTemplate stringRedisTemplate;
-
-    public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate) {
+    public LogisticsController(LogisticsService logisticsService, RedisTemplate<String, LogisticsStatus> redisTemplate) {
         this.logisticsService = logisticsService;
-        this.stringRedisTemplate = stringRedisTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @GetMapping("/query")
     public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
-        stringRedisTemplate.opsForValue().set("scolley34", "111");
-        Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
-        return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
+        LogisticsStatus cacheLogisticsStatus = redisTemplate.opsForValue().get(logisticsNumber);
+        if (cacheLogisticsStatus == null) {
+            Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
+            assert logisticsStatus.orElse(null) != null;
+            redisTemplate.opsForValue().set(logisticsNumber, logisticsStatus.orElse(null));
+            return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
+        } else {
+            return ResponseEntity.ok(new ApiResponse<>("success", cacheLogisticsStatus));
+        }
     }
 
     @GetMapping("/fake")

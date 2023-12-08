@@ -12,6 +12,8 @@ public class Recipient {
     private String address;
     private String phone;
 
+    public Recipient() {
+    }
     public Recipient(UUID id, String name, String address, String phone) {
         this.id = id;
         this.name = name;

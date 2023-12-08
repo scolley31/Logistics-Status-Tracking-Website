@@ -10,6 +10,9 @@ public class CurrentLocation {
     private String city;
     private String address;
 
+    public CurrentLocation() {
+    }
+
     public CurrentLocation(Long location_id, String title, String city, String address) {
         this.location_id = location_id;
         this.title = title;

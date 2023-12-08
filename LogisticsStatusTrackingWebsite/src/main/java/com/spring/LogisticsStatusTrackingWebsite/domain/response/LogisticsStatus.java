@@ -15,6 +15,8 @@ public class LogisticsStatus {
     private Recipient recipient;
     private CurrentLocation current_location;
 
+    public LogisticsStatus() {
+    }
     public LogisticsStatus(long sno, TrackingStatus tracking_status, String estimated_delivery, LogisticsStatusDetail[] details, Recipient recipient, CurrentLocation current_location) {
         this.sno = sno;
         this.tracking_status = tracking_status;
