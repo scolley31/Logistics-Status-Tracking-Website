@@ -16,7 +16,7 @@ services:
       - ./:/app
     depends_on:
       - mysqlserver
-      - cache
+      - redis
   mysqlserver:
     image: mysql:8.0
     ports:
@@ -30,7 +30,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - mysql_config:/etc/mysql/conf.d
-  cache:
+  redis:
     image: "redis"
     ports:
       - "6379:6379"

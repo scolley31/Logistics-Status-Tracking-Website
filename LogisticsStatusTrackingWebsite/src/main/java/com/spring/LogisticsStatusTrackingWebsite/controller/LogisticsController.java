@@ -29,13 +29,13 @@ public class LogisticsController {
 
     @GetMapping("/query")
     public ResponseEntity<ApiResponse<LogisticsStatus>> queryLogisticsStatus(@RequestParam("sno") String logisticsNumber) {
+        stringRedisTemplate.opsForValue().set("scolley34", "111");
         Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
         return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
     }
 
     @GetMapping("/fake")
     public ResponseEntity<ApiResponse<List<LogisticsStatus>>> createFakeLogisticsStatus(@RequestParam("num") String dataCounts) {
-        stringRedisTemplate.opsForValue().set("123", "111");
         List<LogisticsStatus> fakeLogisticsStatuses = logisticsService.createFakeLogisticsStatus(dataCounts);
         return ResponseEntity.ok(new ApiResponse<>("success", fakeLogisticsStatuses));
     }
