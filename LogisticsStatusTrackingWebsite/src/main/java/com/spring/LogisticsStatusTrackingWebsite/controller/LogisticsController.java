@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class LogisticsController {
         if (cacheLogisticsStatus == null) {
             Optional<LogisticsStatus> logisticsStatus = logisticsService.queryLogisticsStatus(logisticsNumber);
             assert logisticsStatus.orElse(null) != null;
-            redisTemplate.opsForValue().set(logisticsNumber, logisticsStatus.orElse(null));
+            redisTemplate.opsForValue().set(logisticsNumber, logisticsStatus.orElse(null), Duration.ofHours(1));
             return logisticsStatus.map(status -> ResponseEntity.ok(new ApiResponse<>("success", status))).orElseGet(() -> ResponseEntity.ok(new ApiResponse<>("", null, new ErrorResponse(200, "Logistics number not found"))));
         } else {
             return ResponseEntity.ok(new ApiResponse<>("success", cacheLogisticsStatus));
