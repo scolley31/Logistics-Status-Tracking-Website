@@ -5,6 +5,7 @@ import com.spring.LogisticsStatusTrackingWebsite.domain.response.ApiResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.ErrorResponse;
 import com.spring.LogisticsStatusTrackingWebsite.domain.response.LogisticsStatus;
 import com.spring.LogisticsStatusTrackingWebsite.service.LogisticsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class LogisticsController {
 
     private final LogisticsService logisticsService;
+
+    @Autowired
     private final StringRedisTemplate stringRedisTemplate;
 
     public LogisticsController(LogisticsService logisticsService, StringRedisTemplate stringRedisTemplate) {
