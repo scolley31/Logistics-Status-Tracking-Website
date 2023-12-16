@@ -19,4 +19,9 @@ public class HelloWorldController {
         stringRedisTemplate.opsForValue().set("scolley", "123456");
         return ResponseEntity.ok("Hello World");
     }
+
+    @GetMapping("/api/test")
+    public ResponseEntity<String> HelloTest() {
+        return ResponseEntity.ok("Hello World");
+    }
 }
