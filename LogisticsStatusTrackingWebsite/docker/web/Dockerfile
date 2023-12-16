@@ -5,16 +5,16 @@ FROM eclipse-temurin:17-jdk-jammy as base
 WORKDIR /app
 
 # Copy the .mvn directory (used by Maven for configuration) from the local project to the container
-COPY .mvn/ .mvn
+COPY ../.mvn .mvn
 
 # Copy the Maven wrapper script (mvnw), the project's POM file (pom.xml), and the root directory to the container
-COPY mvnw pom.xml ./
+COPY ../mvnw pom.xml ./
 
 # Resolve project dependencies using Maven
 RUN ./mvnw dependency:resolve
 
 # Copy the source code from the local project to the container
-COPY src ./src
+COPY ../src ./src
 
 # Create a new stage named "development" based on the "base" stage
 FROM base as development
