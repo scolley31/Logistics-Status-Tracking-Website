@@ -36,6 +36,15 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - mysql_config:/etc/mysql/conf.d
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_CONF=events {} http { server { listen 80; location / { proxy_pass http://petclinic:8080; proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme; } } }
+    depends_on:
+      - petclinic
 volumes:
   mysql_data:
   mysql_config:
